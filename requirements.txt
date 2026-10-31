@@ -1,0 +1,8 @@
+# Local (demo y pruebas): Python >= 3.10. El paquete busqueda/ es Python puro.
+pytest
+
+# Colab (notebooks, Python 3.12, GPU T4): los instala la celda 1 de cada notebook.
+#   bitsandbytes>=0.46.1 transformers accelerate nltk spacy emoji langdetect immutabledict
+#   + modelo spaCy en_core_web_sm, datos nltk (punkt, punkt_tab, averaged_perceptron_tagger[_eng])
+#   + git clone https://github.com/allenai/open-instruct en /content/open-instruct
+# torch, pandas y matplotlib ya vienen en Colab.

@@ -1,10 +1,102 @@
-# Proyecto Oráculo
+# Proyecto Oráculo · ADAG1 · Grupo 1
+
+| | |
+|---|---|
+| Integrante | Lenuard |
+| Curso | Análisis y Diseño de Algoritmos 2026-B |
+| Subproyecto | ADAG1 · Proyecto Oráculo (búsqueda de configuraciones de prompt) |
+| Versión | primera entrega, rama `main`, tag `v0.1-entrega1` (se crea al entregar) |
+| Código | https://github.com/Lenuard/ADA-2026-2-GP01 |
+| Python | 3.12 en Colab (notebooks), ≥ 3.10 en local (demo y pruebas) |
+
+Esta es la **solución base**. Tiene cuatro algoritmos de búsqueda sobre el oráculo, cada uno con su T(n) en el docstring, un oráculo sintético para correrlos en CPU, pruebas y los dos notebooks de la entrega. Falta medir los tiempos contra T(n) (semanas 9–10) y las variantes del §4.5; ver [docs/manual_tecnico.md](docs/manual_tecnico.md).
+
+| Notebook | Para qué | Colab |
+|---|---|---|
+| `notebooks/busqueda.ipynb` | Cómo se obtuvo la config: diagnóstico por trazas, los 4 algoritmos, `oraculo.validar` y `entrega.json` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Lenuard/ADA-2026-2-GP01/blob/main/notebooks/busqueda.ipynb) |
+| `notebooks/evaluacion.ipynb` | Carga `entrega.json` y la evalúa sobre los datos de prueba, sin editar nada | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Lenuard/ADA-2026-2-GP01/blob/main/notebooks/evaluacion.ipynb) |
+| `proyecto_oraculo.ipynb` | Notebook original del curso, sin cambios, como referencia | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Lenuard/ADA-2026-2-GP01/blob/main/proyecto_oraculo.ipynb) |
+
+`entrega.json` va en la raíz del repo. Lo genera la sección (e) de `notebooks/busqueda.ipynb` y lo lee `notebooks/evaluacion.ipynb`, así que las dos usan la misma config.
+
+## Estructura
+
+```
+oraculo.py, ayudas.py, datos_visibles.json   base del curso, sin modificar
+busqueda/        paquete de búsqueda, Python puro (sin torch)
+  espacio.py       ranuras, espacio reducido, validar_config / validar_entrega
+  presupuesto.py   OraculoContado: cuenta consultas y corta en B
+  trazas.py        diagnóstico por ranura con las trazas de fallo
+  backtracking.py  Alg. 1 · backtracking con poda por cota superior
+  halving.py       Alg. 2 · Successive Halving
+  coordenadas.py   Alg. 3 · descenso por coordenadas
+  reparto.py       Alg. 4 · reparto uniforme frente a adaptativo
+  sintetico.py     oráculo sintético con la misma interfaz (CPU)
+notebooks/       busqueda.ipynb y evaluacion.ipynb (Colab, T4)
+tests/           pruebas con pytest sobre el oráculo sintético
+docs/            manual técnico
+demo.py          los 4 algoritmos en CPU
+```
+
+## Ejemplo pequeño en local
+
+`oraculo.py` necesita GPU, torch y open-instruct, así que en local se usa el oráculo sintético:
+
+```
+python -m pip install -r requirements.txt
+python demo.py
+python -m pytest tests/ -v
+```
+
+Salida esperada de `python demo.py` (es determinista: semilla 3, 10 % de ruido):
+
+```
+oráculo sintético: semilla 3, ruido 10%, 100 instancias de búsqueda, 87 de validación
+
+(a) diagnóstico con 50 instancias, k=2
+    rol        conserva [5, 2]
+    estrategia conserva [4, 0]
+    formato    conserva [6, 3]
+    estilo     conserva [1, 5]
+    cierre     conserva [2, 0]
+    30 opciones descartadas; ejemplo: rol 0 → descartada: precisión 50.0% < corte 84.0%; rompe startend:end_checker (+14), detectable_content:postscript (+6), first_word:first_word_answer (+2)
+    espacio: 32768 → 32 configs
+
+(b) algoritmos sobre C' con 100 instancias, B=3200 por algoritmo
+    Alg. 1 backtracking         79.0%  consultas  1600  nodos 16, podas 8
+    Alg. 2 successive halving   85.4%  consultas   288  (precisión en 48 inst) nominales 480 = |C|·n0·log2|C| = 480
+    Alg. 3 coordenadas          81.0%  consultas   800  iteraciones 2, convergió True
+    Alg. 4 reparto (precisión de la ganadora en las 100 instancias)
+        B     uniforme  adaptativo
+       160     79.0%      79.0%
+       480     70.0%      79.0%
+       960     79.0%      80.0%
+      1600     79.0%      80.0%
+
+(c) mejor observada (coordenadas): {'rol': 2, 'estrategia': 4, 'formato': 3, 'estilo': 1, 'cierre': 2, 'temperatura': 0.0}  búsqueda 81.0%
+(d) validación: 75.9%  (87 inst)
+   13  first_word:first_word_answer
+    2  punctuation:no_comma
+    2  change_case:english_lowercase
+```
+
+En este mundo sintético la config limpia vale 90 %. Con ruido, el diagnóstico de 50 instancias descartó la opción limpia de `rol`, y los algoritmos encontraron lo mejor **dentro** del espacio reducido (81 %). Por eso los notebooks hablan de *mejor observada* y no de óptimo. Las pruebas comprueban que las configs de salida respetan la interfaz (6 llaves, índices 0..7, temperatura válida), que ningún algoritmo pasa de B, que el backtracking da el mismo óptimo que la fuerza bruta y que Successive Halving gasta exactamente |C|·n0·log₂|C| consultas nominales.
+
+## En Colab
+
+1. Abrir `notebooks/busqueda.ipynb` con el badge y elegir **T4 GPU**.
+2. Correr la celda 1 y **reiniciar la sesión**. Luego correr el resto en orden.
+3. Descargar `entrega.json` y subirlo a la raíz del repo.
+
+---
+
+# Enunciado del curso (README original)
 
 Curso de Análisis y Diseño de Algoritmos. El trabajo es encontrar una buena configuración de prompt consultando un oráculo. Busquen y validen cuantas veces quieran: el caché guarda lo ya generado y las trazas de fallos vienen con cada resultado.
 
 | Notebook | Colab |
 |---|---|
-| Proyecto | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/DanielMelo404/Proyecto-Oraculo-AyD/blob/main/proyecto_oraculo.ipynb) |
+| Proyecto | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Lenuard/ADA-2026-2-GP01/blob/main/proyecto_oraculo.ipynb) |
 
 ## Cómo se juega
 
