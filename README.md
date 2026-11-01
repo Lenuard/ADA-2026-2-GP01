@@ -17,6 +17,18 @@ Esta es la **solución base**. Tiene cuatro algoritmos de búsqueda sobre el or�
 | `notebooks/evaluacion.ipynb` | Carga `entrega.json` y la evalúa sobre los datos de prueba, sin editar nada | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Lenuard/ADA-2026-2-GP01/blob/main/notebooks/evaluacion.ipynb) |
 | `proyecto_oraculo.ipynb` | Notebook original del curso, sin cambios, como referencia | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Lenuard/ADA-2026-2-GP01/blob/main/proyecto_oraculo.ipynb) |
 
+## Resultado de la primera entrega
+
+| | |
+|---|---|
+| Config entregada | `rol 5, estrategia 6, formato 0, estilo 6, cierre 3, temperatura 0.0` ([entrega.json](entrega.json)) |
+| Modelo | `qwen17b` (Qwen/Qwen3-1.7B) en Colab T4 |
+| Precisión en búsqueda | **17,0 %** ± 3,8 (100 instancias) |
+| Precisión en validación (`oraculo.validar`) | **20,7 %** ± 4,3 (87 instancias) |
+| Método que la encontró | descenso por coordenadas sobre el espacio reducido por trazas (32 configs) |
+
+Es la **mejor observada**, no un óptimo garantizado. El backtracking y Successive Halving llegaron a `2, 6, 0, 6, 3` con 15 %, una diferencia de 2 instancias que está dentro del error de muestreo. El análisis completo (diagnóstico, tabla de configs, trazas y validación) está en `notebooks/busqueda.ipynb`. El registro de las 83 evaluaciones está en [resultados/registro_busqueda.csv](resultados/registro_busqueda.csv).
+
 `entrega.json` va en la raíz del repo. Lo genera la sección (e) de `notebooks/busqueda.ipynb` y lo lee `notebooks/evaluacion.ipynb`, así que las dos usan la misma config.
 
 ## Estructura
@@ -35,6 +47,8 @@ busqueda/        paquete de búsqueda, Python puro (sin torch)
 notebooks/       busqueda.ipynb y evaluacion.ipynb (Colab, T4)
 tests/           pruebas con pytest sobre el oráculo sintético
 docs/            manual técnico
+resultados/      registro_busqueda.csv de la corrida en Colab
+entrega.json     config entregada
 demo.py          los 4 algoritmos en CPU
 ```
 
@@ -85,10 +99,14 @@ En este mundo sintético la config limpia vale 90 %. Con ruido, el diagnóstico 
 ## En Colab
 
 1. Abrir `notebooks/busqueda.ipynb` con el badge y elegir **T4 GPU**.
-2. Pulsar **Ctrl+F9** (*Ejecutar todas*). La celda 1 instala y reinicia la sesión sola.
-3. Pulsar **Ctrl+F9 otra vez** y aceptar el permiso de Google Drive. Desde ahí corre solo.
-4. Si Colab se desconecta, repetir los pasos 2–3: el caché en Drive retoma donde iba.
-5. Al final se descargan `entrega.json` y `registro_busqueda.csv`, y quedan copiados en `MyDrive/oraculo_resultados/`. `entrega.json` se sube a la raíz del repo.
+2. Correr la celda 1 (instalación) y luego *Entorno de ejecución ▸ **Reiniciar sesión***.
+3. Hacer clic en la celda 2 y usar *Entorno de ejecución ▸ **Ejecutar celdas posteriores*** (Ctrl+F10). Aceptar el permiso de Google Drive: ahí se guarda el caché del oráculo (`MyDrive/oraculo_cache.json`).
+4. Si Colab se desconecta, repetir los pasos 2–3. Gracias al caché en Drive no se vuelve a generar lo ya hecho.
+5. Al final se descargan `entrega.json` y `registro_busqueda.csv`. `entrega.json` se sube a la raíz del repo.
+
+El notebook del repo es **la corrida real, con sus salidas**. Al abrirlo con el badge se ven los resultados sin volver a ejecutar nada.
+
+`notebooks/evaluacion.ipynb` no necesita pasos manuales: con **Ctrl+F9** la celda 1 instala y reinicia la sesión sola, y con un segundo **Ctrl+F9** evalúa.
 
 ---
 

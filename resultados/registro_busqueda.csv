@@ -1,0 +1,84 @@
+algoritmo,config,n,precision,completa
+backtracking,"{'rol': 2, 'temperatura': 0.0}",100,0.18,False
+backtracking,"{'rol': 5, 'temperatura': 0.0}",100,0.14,False
+backtracking,"{'rol': 2, 'estrategia': 6, 'temperatura': 0.0}",100,0.13,False
+backtracking,"{'rol': 2, 'estrategia': 3, 'temperatura': 0.0}",100,0.12,False
+backtracking,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'temperatura': 0.0}",100,0.1,False
+backtracking,"{'rol': 2, 'estrategia': 6, 'formato': 2, 'temperatura': 0.0}",100,0.09,False
+backtracking,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 0, 'temperatura': 0.0}",100,0.08,False
+backtracking,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 6, 'temperatura': 0.0}",100,0.16,False
+backtracking,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",100,0.15,True
+backtracking,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",100,0.12,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 0, 'cierre': 6, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 2, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 2, 'estilo': 0, 'cierre': 6, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 2, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 2, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 3, 'formato': 0, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 3, 'formato': 0, 'estilo': 0, 'cierre': 6, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 3, 'formato': 0, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 3, 'formato': 0, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 3, 'formato': 2, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 3, 'formato': 2, 'estilo': 0, 'cierre': 6, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 3, 'formato': 2, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 3, 'formato': 2, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 5, 'estrategia': 6, 'formato': 0, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 5, 'estrategia': 6, 'formato': 0, 'estilo': 0, 'cierre': 6, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 5, 'estrategia': 6, 'formato': 0, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 5, 'estrategia': 6, 'formato': 0, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 5, 'estrategia': 6, 'formato': 2, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 5, 'estrategia': 6, 'formato': 2, 'estilo': 0, 'cierre': 6, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 5, 'estrategia': 6, 'formato': 2, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 5, 'estrategia': 6, 'formato': 2, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 5, 'estrategia': 3, 'formato': 0, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 5, 'estrategia': 3, 'formato': 0, 'estilo': 0, 'cierre': 6, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 5, 'estrategia': 3, 'formato': 0, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 5, 'estrategia': 3, 'formato': 0, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 5, 'estrategia': 3, 'formato': 2, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 5, 'estrategia': 3, 'formato': 2, 'estilo': 0, 'cierre': 6, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 5, 'estrategia': 3, 'formato': 2, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 5, 'estrategia': 3, 'formato': 2, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",3,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",6,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 0, 'cierre': 6, 'temperatura': 0.0}",6,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",6,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",6,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 2, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",6,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 2, 'estilo': 0, 'cierre': 6, 'temperatura': 0.0}",6,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 2, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",6,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 2, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",6,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 3, 'formato': 0, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",6,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 3, 'formato': 0, 'estilo': 0, 'cierre': 6, 'temperatura': 0.0}",6,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 3, 'formato': 0, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",6,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 3, 'formato': 0, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",6,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 3, 'formato': 2, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",6,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 3, 'formato': 2, 'estilo': 0, 'cierre': 6, 'temperatura': 0.0}",6,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 3, 'formato': 2, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",6,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 3, 'formato': 2, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",6,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",12,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 0, 'cierre': 6, 'temperatura': 0.0}",12,0.08333333333333333,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",12,0.08333333333333333,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",12,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 2, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",12,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 2, 'estilo': 0, 'cierre': 6, 'temperatura': 0.0}",12,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 2, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",12,0.0,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 2, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",12,0.08333333333333333,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 0, 'cierre': 6, 'temperatura': 0.0}",24,0.041666666666666664,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",24,0.08333333333333333,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 2, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",24,0.08333333333333333,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",24,0.041666666666666664,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",48,0.14583333333333334,True
+successive_halving,"{'rol': 2, 'estrategia': 6, 'formato': 2, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",48,0.0625,True
+coordenadas,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",100,0.12,True
+coordenadas,"{'rol': 5, 'estrategia': 6, 'formato': 0, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",100,0.14,True
+coordenadas,"{'rol': 5, 'estrategia': 3, 'formato': 0, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",100,0.13,True
+coordenadas,"{'rol': 5, 'estrategia': 6, 'formato': 2, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",100,0.07,True
+coordenadas,"{'rol': 5, 'estrategia': 6, 'formato': 0, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",100,0.17,True
+coordenadas,"{'rol': 5, 'estrategia': 6, 'formato': 0, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",100,0.12,True
+coordenadas,"{'rol': 2, 'estrategia': 6, 'formato': 0, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",100,0.15,True
+coordenadas,"{'rol': 5, 'estrategia': 3, 'formato': 0, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",100,0.12,True
+coordenadas,"{'rol': 5, 'estrategia': 6, 'formato': 2, 'estilo': 6, 'cierre': 3, 'temperatura': 0.0}",100,0.09,True
+coordenadas,"{'rol': 5, 'estrategia': 6, 'formato': 0, 'estilo': 0, 'cierre': 3, 'temperatura': 0.0}",100,0.14,True
+coordenadas,"{'rol': 5, 'estrategia': 6, 'formato': 0, 'estilo': 6, 'cierre': 6, 'temperatura': 0.0}",100,0.12,True

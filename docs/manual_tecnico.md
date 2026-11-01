@@ -128,11 +128,12 @@ print(r["config"], r["precision"])
 ### 4.2 Colab
 
 1. Abrir `notebooks/busqueda.ipynb` desde el badge del README y elegir *Entorno de ejecución ▸ T4 GPU*.
-2. Pulsar **Ctrl+F9** (*Ejecutar todas*). La celda 1 instala y reinicia la sesión sola, porque `transformers` queda a medias si no se reinicia; Colab puede avisar que la sesión falló, y es lo esperado. Luego pulsar **Ctrl+F9 otra vez**: la celda 1 ve la marca `/content/.instalado` y no reinstala. Hay que aceptar el permiso de Google Drive, y desde ahí todo corre sin intervención.
+2. Correr la celda 1 (instalación) y luego *Entorno de ejecución ▸ Reiniciar sesión*, porque `transformers` queda a medias si no se reinicia. Después, con el cursor en la celda 2, *Entorno de ejecución ▸ Ejecutar celdas posteriores* (Ctrl+F10). Hay que aceptar el permiso de Google Drive, y desde ahí todo corre sin intervención.
    - Si Colab se desconecta (inactividad, límite de la sesión gratuita), se repite el paso 2. El caché del oráculo está en `MyDrive/oraculo_cache.json`, así que lo ya generado no se vuelve a pagar.
+   - El notebook del repo guarda las salidas de la corrida real: se puede revisar sin ejecutarlo.
 3. Los parámetros (`K`, `N_DIAG`, `N0`, `B`, `MAX_ITER`) están en la sección 3 del notebook, con su justificación. En el peor caso, la unión de consultas al LLM es de unas 2 050 (diagnóstico) + 3 200 (C' completo con 100 instancias) + 87 (validación).
-4. La sección (e) descarga `entrega.json` y `registro_busqueda.csv` y los copia en `MyDrive/oraculo_resultados/`. `entrega.json` se sube a la raíz del repo.
-5. `notebooks/evaluacion.ipynb` se corre igual (Ctrl+F9 dos veces, sin Drive) y no hay que editar nada. Lee `entrega.json` del repo y los datos de `/content/datos_prueba.json`; si no están, los pide con `files.upload()`. Imprime la precisión en prueba.
+4. La sección (e) descarga `entrega.json` y `registro_busqueda.csv`. `entrega.json` va a la raíz del repo y el registro a `resultados/`.
+5. `notebooks/evaluacion.ipynb` no necesita pasos manuales ni Drive: con **Ctrl+F9** la celda 1 instala y reinicia la sesión sola (Colab puede avisar que la sesión falló; es lo esperado), y con un segundo **Ctrl+F9** evalúa. No hay que editar nada. Lee `entrega.json` del repo y los datos de `/content/datos_prueba.json`; si no están, los pide con `files.upload()`. Imprime la precisión en prueba.
 
 **Formato de `entrega.json`**:
 
@@ -158,7 +159,7 @@ Los índices van de 0 a 7 y la temperatura es uno de 0.0, 0.3 o 0.7. `busqueda.v
 | `test_coordenadas_termina_dentro_de_max_iter` | El descenso por coordenadas respeta `max_iter`. |
 | `test_formato_de_entrega_es_valido` / `test_entrega_json_del_repo` | El formato de `ayudas.entrega` es válido. `entrega.json` del repo se valida si existe; si no, la prueba se omite. |
 
-Resultado actual: 19 pruebas pasan y 1 se omite, porque `entrega.json` todavía no se generó.
+Resultado actual: las 20 pruebas pasan, incluida la validación de `entrega.json`.
 
 ### 5.2 Supuestos
 
@@ -169,9 +170,12 @@ Resultado actual: 19 pruebas pasan y 1 se omite, porque `entrega.json` todavía 
 
 ### 5.3 Errores y limitaciones conocidos
 
-- **La config entregada es la mejor observada, no un óptimo garantizado.** Hay tres fuentes de error: el diagnóstico (que en la demo descarta la opción limpia de `rol` por ruido y deja la búsqueda en 81 % cuando el óptimo es 90 %), la cota heurística y el error de muestreo. Con 100 instancias todo-o-nada, el error estándar de la precisión es de unos ±4 puntos.
+- **La config entregada es la mejor observada, no un óptimo garantizado.** Hay tres fuentes de error:
+  - el diagnóstico: en la demo descarta la opción limpia de `rol` por ruido y deja la búsqueda en 81 % cuando el óptimo es 90 %; en la corrida real, con 50 instancias, muchas opciones se descartaron por diferencias de 2–4 puntos, dentro del ruido;
+  - la cota heurística: en la corrida real podó una rama que contenía una config mejor (ver §6);
+  - el error de muestreo: con 100 instancias todo-o-nada, el error estándar de la precisión es de unos ±4 puntos.
 - Si los datos privados traen familias de restricción que no están en IFEvalG, `Oraculo` lanza `KeyError` ("ningún registro conoce …"). Para esos casos el oráculo acepta registros extra (`registros=`), pero el notebook de evaluación no los carga porque no conoce esas familias.
-- En Colab, si la sesión no se reinicia después de instalar, `cargar_modelo` puede fallar con un error opaco. La celda 1 reinicia sola matando el proceso; si una versión futura de Colab no reinicia así, hay que usar *Entorno de ejecución ▸ Reiniciar sesión* a mano.
+- En Colab, si la sesión no se reinicia después de instalar, `cargar_modelo` puede fallar con un error opaco. En `evaluacion.ipynb` la celda 1 reinicia sola matando el proceso; si una versión futura de Colab no reinicia así, hay que usar *Entorno de ejecución ▸ Reiniciar sesión* a mano.
 - Colab gratis corta las sesiones por inactividad y tiene un tope de horas y de cuota de GPU. El caché en Drive hace que reanudar no repita generaciones, pero no evita el corte. Si la VRAM se queda corta, el oráculo reintenta de a un prompt (más lento).
 - `OraculoContado` cuenta consultas por algoritmo. El costo real en la GPU es la unión, que es menor porque el caché es compartido.
 
@@ -180,7 +184,7 @@ Resultado actual: 19 pruebas pasan y 1 se omite, porque `entrega.json` todavía 
 - **Mediciones de tiempo contra T(n)** con al menos 5 tamaños de n (semanas 9–10). El oráculo sintético ya está listo para eso.
 - **Variantes del §4.5**: temperatura con 3 niveles, UCB1, recocido simulado o algoritmo genético.
 - **Búsqueda sobre la temperatura**: `espacio.TEMPERATURAS` y `validar_config` la admiten, pero los algoritmos la dejan fija en 0.0.
-- **Números reales del LLM**: README y manual se actualizan con la config, la precisión de búsqueda y la de validación cuando se corra `busqueda.ipynb` en Colab.
+- **Segunda pasada sobre opciones descartadas dentro del ruido**: repetir el diagnóstico con más instancias, o correr el descenso por coordenadas con las 8 opciones por ranura partiendo de la config entregada (5 · 7 · 100 = 3 500 consultas por iteración).
 
 ### 5.5 Diferencias entre documentos
 
@@ -193,3 +197,21 @@ El enunciado (docx), la guía y el repo base no coinciden en algunos datos. Esta
 | \|C\| | 3 840 (en otro lugar 144; 432 con temperatura) | — | 8⁵ = 32 768 (×3 con temperaturas) |
 | n de búsqueda | 150 | — | 100 de búsqueda + 87 de validación |
 | k_max | 4 | — | 8 opciones por ranura |
+
+## 6. Resultados de la corrida en Colab
+
+Corrida de `notebooks/busqueda.ipynb` con `qwen17b` en T4 y los parámetros de la sección 3 del notebook (K = 2, N_DIAG = 50, N0 = 3, B = 3 200, semilla 1). Las salidas completas están en el notebook; el registro de evaluaciones está en `resultados/registro_busqueda.csv`.
+
+**Diagnóstico.** La config vacía acierta el 12 % (50 instancias). Se conservaron rol {2, 5}, estrategia {6, 3}, formato {0, 2}, estilo {0, 6} y cierre {3, 6}, con lo que \|C'\| = 32. Las opciones claramente dañinas fueron las que agregan estructura o texto obligatorio: formato 4, 5 y 7 y cierre 4, 5 y 7, con 4–8 % frente al 12 % de la base.
+
+| Algoritmo | Config (rol, estrategia, formato, estilo, cierre) | Precisión (100 inst) | Consultas propias |
+|---|---|---|---|
+| Backtracking | 2, 6, 0, 6, 3 | 15 % | 1 000 (10 nodos, 5 podas) |
+| Successive Halving | 2, 6, 0, 6, 3 | 15 % | 288 reales; 480 nominales = \|C\|·n0·log₂\|C\| |
+| Descenso por coordenadas | **5, 6, 0, 6, 3** | **17 %** | 900 (2 iteraciones, convergió) |
+
+- **La cota del backtracking no es válida con el LLM.** El backtracking podó la rama `rol` 5 porque `{rol: 5}` sola daba 14 %, menos que su mejor hoja (15 %). Pero la config completa `5, 6, 0, 6, 3` da 17 %: agregar ranuras subió la precisión, cosa que el oráculo sintético no permite.
+- **Successive Halving** coincidió con la fórmula de costo nominal y gastó realmente 288 consultas gracias a los prefijos anidados.
+- **Reparto (Alg. 4).** Con B = 160, el reparto uniforme (5 instancias por config) empató todas las configs en 0 %. Con B = 480 sobreestimó a su ganadora (20 % en 15 instancias frente a 14 % en 100). El adaptativo obtuvo una ganadora igual o mejor (12–15 %) con 576 consultas como máximo.
+
+**Selección y validación.** La config entregada es `5, 6, 0, 6, 3` con temperatura 0.0. Tiene 17,0 % ± 3,8 en búsqueda y 20,7 % ± 4,3 con `oraculo.validar` sobre las 87 instancias de validación. La diferencia está dentro del error de muestreo, así que no hay señal de sobreajuste. Las familias que más fallan (`last_word:last_word_sent`, `punctuation:punctuation_dot`, las de copia literal) también fallan con la config vacía, y apuntan a límites del modelo de 1,7B más que a la configuración.
