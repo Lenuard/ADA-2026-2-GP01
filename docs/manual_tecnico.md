@@ -128,10 +128,11 @@ print(r["config"], r["precision"])
 ### 4.2 Colab
 
 1. Abrir `notebooks/busqueda.ipynb` desde el badge del README y elegir *Entorno de ejecución ▸ T4 GPU*.
-2. Correr la celda 1 y luego **reiniciar la sesión**, porque `transformers` queda a medias si no se reinicia. Después correr el resto en orden.
+2. Pulsar **Ctrl+F9** (*Ejecutar todas*). La celda 1 instala y reinicia la sesión sola, porque `transformers` queda a medias si no se reinicia; Colab puede avisar que la sesión falló, y es lo esperado. Luego pulsar **Ctrl+F9 otra vez**: la celda 1 ve la marca `/content/.instalado` y no reinstala. Hay que aceptar el permiso de Google Drive, y desde ahí todo corre sin intervención.
+   - Si Colab se desconecta (inactividad, límite de la sesión gratuita), se repite el paso 2. El caché del oráculo está en `MyDrive/oraculo_cache.json`, así que lo ya generado no se vuelve a pagar.
 3. Los parámetros (`K`, `N_DIAG`, `N0`, `B`, `MAX_ITER`) están en la sección 3 del notebook, con su justificación. En el peor caso, la unión de consultas al LLM es de unas 2 050 (diagnóstico) + 3 200 (C' completo con 100 instancias) + 87 (validación).
-4. La sección (e) descarga `entrega.json` y `registro_busqueda.csv`. `entrega.json` se sube a la raíz del repo.
-5. `notebooks/evaluacion.ipynb` se corre igual y no hay que editar nada. Lee `entrega.json` del repo y los datos de `/content/datos_prueba.json`; si no están, los pide con `files.upload()`. Imprime la precisión en prueba.
+4. La sección (e) descarga `entrega.json` y `registro_busqueda.csv` y los copia en `MyDrive/oraculo_resultados/`. `entrega.json` se sube a la raíz del repo.
+5. `notebooks/evaluacion.ipynb` se corre igual (Ctrl+F9 dos veces, sin Drive) y no hay que editar nada. Lee `entrega.json` del repo y los datos de `/content/datos_prueba.json`; si no están, los pide con `files.upload()`. Imprime la precisión en prueba.
 
 **Formato de `entrega.json`**:
 
@@ -170,7 +171,8 @@ Resultado actual: 19 pruebas pasan y 1 se omite, porque `entrega.json` todavía 
 
 - **La config entregada es la mejor observada, no un óptimo garantizado.** Hay tres fuentes de error: el diagnóstico (que en la demo descarta la opción limpia de `rol` por ruido y deja la búsqueda en 81 % cuando el óptimo es 90 %), la cota heurística y el error de muestreo. Con 100 instancias todo-o-nada, el error estándar de la precisión es de unos ±4 puntos.
 - Si los datos privados traen familias de restricción que no están en IFEvalG, `Oraculo` lanza `KeyError` ("ningún registro conoce …"). Para esos casos el oráculo acepta registros extra (`registros=`), pero el notebook de evaluación no los carga porque no conoce esas familias.
-- En Colab, si no se reinicia después de la celda 1, `cargar_modelo` puede fallar con un error opaco. Si la VRAM se queda corta, el oráculo reintenta de a un prompt (más lento).
+- En Colab, si la sesión no se reinicia después de instalar, `cargar_modelo` puede fallar con un error opaco. La celda 1 reinicia sola matando el proceso; si una versión futura de Colab no reinicia así, hay que usar *Entorno de ejecución ▸ Reiniciar sesión* a mano.
+- Colab gratis corta las sesiones por inactividad y tiene un tope de horas y de cuota de GPU. El caché en Drive hace que reanudar no repita generaciones, pero no evita el corte. Si la VRAM se queda corta, el oráculo reintenta de a un prompt (más lento).
 - `OraculoContado` cuenta consultas por algoritmo. El costo real en la GPU es la unión, que es menor porque el caché es compartido.
 
 ### 5.4 Componentes aún no desarrollados

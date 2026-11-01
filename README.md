@@ -85,8 +85,10 @@ En este mundo sintético la config limpia vale 90 %. Con ruido, el diagnóstico 
 ## En Colab
 
 1. Abrir `notebooks/busqueda.ipynb` con el badge y elegir **T4 GPU**.
-2. Correr la celda 1 y **reiniciar la sesión**. Luego correr el resto en orden.
-3. Descargar `entrega.json` y subirlo a la raíz del repo.
+2. Pulsar **Ctrl+F9** (*Ejecutar todas*). La celda 1 instala y reinicia la sesión sola.
+3. Pulsar **Ctrl+F9 otra vez** y aceptar el permiso de Google Drive. Desde ahí corre solo.
+4. Si Colab se desconecta, repetir los pasos 2–3: el caché en Drive retoma donde iba.
+5. Al final se descargan `entrega.json` y `registro_busqueda.csv`, y quedan copiados en `MyDrive/oraculo_resultados/`. `entrega.json` se sube a la raíz del repo.
 
 ---
 
