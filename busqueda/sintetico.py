@@ -2,8 +2,9 @@
 sintetico.py — oráculo sintético con la misma interfaz que `oraculo.Oraculo`.
 
 Sirve para correr los algoritmos en CPU, en las pruebas y en la demo, y más
-adelante para medir T(n) sin pagar generaciones. Es además el modelo
-combinatorio de la reducción del informe:
+adelante para medir T(n) sin pagar generaciones. Implementa un caso particular
+del modelo de reglas del informe, aquel en que las opciones solo hacen fallar
+familias (la reducción desde 3-SAT usa el caso opuesto, en que solo ayudan):
 
 - Hay un universo de familias de restricción (las del verificador).
 - Cada instancia exige un subconjunto de 1–3 familias.
